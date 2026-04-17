@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adam Piron - ESCP / M&A / Energie</title>
+<title>ADAM PIRON - ESCP / Ex-M&A</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -444,7 +444,7 @@
               <div class="tl-co tl-co-green">Le Wagon</div>
               <div class="tl-detail">
               <ul class="tl-bullets">
-                <li data-fr="Conception et déploiement d'outils IA internes (chatbots RAG internes, automatisation par agents, dashboards, data analyse, etc), et de produits end-user (applications web, SaaS)" data-en="Design and deployment of internal AI tools (internal RAG chatbots, agent automation, dashboards, data analysis, etc.) and end-user products (web apps, SaaS)">Conception et déploiement d'outils IA internes (chatbots RAG internes, automatisation par agents, dashboards, data analyse, etc), et de produits end-user (applications web, SaaS)</li>
+                <li data-fr="<strong>Syllabus :</strong> Conception et déploiement de produits end-user (applications web, SaaS) et d'outils IA internes (chatbots internes RAG, automatisation par agents, dashboards, data analyse, etc)" data-en="<strong>Syllabus:</strong> Design and deployment of end-user products (web apps, SaaS) and internal AI tools (internal RAG chatbots, agent automation, dashboards, data analysis, etc.)"><strong>Syllabus :</strong> Conception et déploiement de produits end-user (applications web, SaaS) et d'outils IA internes (chatbots internes RAG, automatisation par agents, dashboards, data analyse, etc)</li>
               </ul>
               </div><!-- /tl-detail -->
             </div>
@@ -868,7 +868,7 @@
       <div class="exp-header"><div class="exp-role">AI Product Builder</div><div class="exp-date">Juin 2026 &middot; 1 semaine &middot; Paris</div></div>
       <div class="exp-co">Le Wagon</div>
       <ul>
-        <li>Conception et d&eacute;ploiement d&rsquo;outils IA internes (chatbots RAG internes, automatisation par agents, dashboards, data analyse, etc), et de produits end-user (applications web, SaaS)</li>
+        <li><strong>Syllabus :</strong> Conception et d&eacute;ploiement de produits end-user (applications web, SaaS) et d&rsquo;outils IA internes (chatbots internes RAG, automatisation par agents, dashboards, data analyse, etc)</li>
       </ul>
     </div>
 
@@ -973,7 +973,7 @@
         for (var i = nodes.length - 1; i >= 0; i--) {
           if (nodes[i].nodeType === 3) { nodes[i].textContent = el.getAttribute('data-' + lang); break; }
         }
-      } else { el.textContent = el.getAttribute('data-' + lang); }
+      } else { el.innerHTML = el.getAttribute('data-' + lang); }
     });
   }
   setTimeout(function() {
