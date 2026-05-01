@@ -230,7 +230,7 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .section-title em { font-style: italic; }
+  .section-title em { font-style: normal; }
 
   /* ─── EXPERIENCE ─── */
   #experience { background: var(--bg); border-top: none; padding-top: 80px; }
@@ -657,20 +657,13 @@
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   }
   .carousel-track-wrap::-webkit-scrollbar { display: none; }
-  .carousel-track-wrap:active { cursor: grabbing; }
+  .carousel-track-wrap.is-grabbing { cursor: grabbing; }
   .carousel-track {
     display: flex;
     gap: 20px;
     width: max-content;
     padding: 8px 0;
-    animation: carousel-scroll 30s linear infinite;
-  }
-  .carousel-track:hover {
-    animation-play-state: paused;
-  }
-  @keyframes carousel-scroll {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    will-change: transform;
   }
 
   .proj-card {
@@ -1511,12 +1504,98 @@
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
 
-    // ── Infinite carousel: duplicate cards for seamless CSS-animated loop ──
+    // ── Infinite carousel: JS-driven slow auto-scroll, pause + scroll/drag on hover ──
     (function() {
+      const wrap  = document.querySelector('.carousel-track-wrap');
       const track = document.querySelector('.carousel-track');
+      if (!wrap || !track) return;
+
+      // Duplicate the set so the loop is seamless
       const cards = Array.from(track.children);
-      // Duplicate the set so animation loops seamlessly
       cards.forEach(c => track.appendChild(c.cloneNode(true)));
+
+      // Total width of the ORIGINAL set (half of the doubled track)
+      let loopWidth = track.scrollWidth / 2;
+      window.addEventListener('resize', () => {
+        loopWidth = track.scrollWidth / 2;
+      });
+
+      // Position state — moving left means offset increases
+      let offset = 0;
+      const SPEED = 25; // px per second — slow drift to the left
+      let isHovering = false;
+      let isDragging = false;
+      let lastFrame  = performance.now();
+
+      function normalize() {
+        // Keep offset within [0, loopWidth) so the duplicated set hides the seam
+        if (loopWidth <= 0) return;
+        offset = ((offset % loopWidth) + loopWidth) % loopWidth;
+      }
+
+      function apply() {
+        track.style.transform = `translateX(${-offset}px)`;
+      }
+
+      function tick(now) {
+        const dt = (now - lastFrame) / 1000;
+        lastFrame = now;
+        if (!isHovering && !isDragging) {
+          offset += SPEED * dt;
+          normalize();
+          apply();
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // Pause when the pointer is over the carousel
+      wrap.addEventListener('mouseenter', () => { isHovering = true;  });
+      wrap.addEventListener('mouseleave', () => { isHovering = false; lastFrame = performance.now(); });
+
+      // Wheel-to-spin while hovering — supports vertical and horizontal wheel/trackpad
+      wrap.addEventListener('wheel', (e) => {
+        if (!isHovering) return;
+        // Use whichever axis has the larger delta so a normal mouse wheel works too
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        if (delta === 0) return;
+        e.preventDefault();
+        offset += delta;
+        normalize();
+        apply();
+      }, { passive: false });
+
+      // Drag-to-spin
+      let dragStartX = 0;
+      let dragStartOffset = 0;
+
+      wrap.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartOffset = offset;
+        wrap.classList.add('is-grabbing');
+        wrap.setPointerCapture(e.pointerId);
+      });
+      wrap.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - dragStartX;
+        offset = dragStartOffset - dx;
+        normalize();
+        apply();
+      });
+      function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        wrap.classList.remove('is-grabbing');
+        try { wrap.releasePointerCapture(e.pointerId); } catch (_) {}
+        lastFrame = performance.now();
+      }
+      wrap.addEventListener('pointerup',     endDrag);
+      wrap.addEventListener('pointercancel', endDrag);
+      wrap.addEventListener('pointerleave',  endDrag);
+
+      // Prevent native image/text drag from hijacking the pointer drag
+      wrap.addEventListener('dragstart', (e) => e.preventDefault());
     })();
   </script>
 
