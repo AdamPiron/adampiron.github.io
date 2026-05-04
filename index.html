@@ -95,6 +95,12 @@
   }
   .nav-links a:hover { color: var(--brown-lt); }
 
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
   /* ─── HERO ─── */
   #hero {
     min-height: 100vh;
@@ -880,6 +886,62 @@
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
 
+  /* ─── LANGUAGE SWITCH ─── */
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    background: rgba(74,158,181,0.06);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 3px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.3s, background 0.3s;
+    font-family: var(--sans);
+  }
+  .lang-switch:hover {
+    border-color: var(--brown-dim);
+    background: rgba(74,158,181,0.1);
+  }
+  .lang-switch-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .lang-switch-option {
+    position: relative;
+    z-index: 2;
+    padding: 5px 14px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--text-xdim);
+    transition: color 0.3s ease;
+    line-height: 1;
+  }
+  .lang-switch-option.active {
+    color: var(--bg);
+  }
+  .lang-switch-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: var(--brown);
+    border-radius: 2px;
+    transition: transform 0.35s cubic-bezier(0.4, 0.0, 0.2, 1), background 0.3s;
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(74,158,181,0.25);
+  }
+  .lang-switch[data-lang="fr"] .lang-switch-thumb {
+    transform: translateX(100%);
+  }
+  .lang-switch:hover .lang-switch-thumb {
+    background: var(--brown-lt);
+  }
+
   /* ─── HAMBURGER MENU ─── */
   .nav-hamburger {
     display: none;
@@ -919,6 +981,13 @@
     }
     nav.scrolled {
       padding: 16px 24px;
+    }
+    .nav-right {
+      gap: 16px;
+    }
+    .lang-switch-option {
+      padding: 4px 11px;
+      font-size: 0.6rem;
     }
     .nav-hamburger {
       display: flex;
@@ -1032,16 +1101,26 @@
 <!-- NAV -->
 <nav id="nav">
   <a class="nav-logo" href="#hero">Adam Piron</a>
-  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#experience">Track Record</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#skills">What I Bring</a></li>
-    <li><a href="#projects">AI Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#experience" data-i18n="nav.track">Track Record</a></li>
+      <li><a href="#education" data-i18n="nav.education">Education</a></li>
+      <li><a href="#skills" data-i18n="nav.bring">What I Bring</a></li>
+      <li><a href="#projects" data-i18n="nav.projects">AI Projects</a></li>
+      <li><a href="#other-experiences" data-i18n="nav.other">Other Experiences</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <button class="lang-switch" id="lang-switch" data-lang="en" aria-label="Language switch">
+      <div class="lang-switch-track">
+        <span class="lang-switch-thumb"></span>
+        <span class="lang-switch-option active" data-lang-opt="en">EN</span>
+        <span class="lang-switch-option" data-lang-opt="fr">FR</span>
+      </div>
+    </button>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -1049,15 +1128,15 @@
   <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
   <div class="hero-left">
     <h1 class="hero-name">Adam Piron</h1>
-    <p class="hero-tagline">
-      Finance professional with 2 years of experience and a natural affinity for ambitious projects. Open to opportunities in startups and growth-stage companies in Paris.
+    <p class="hero-tagline" data-i18n="hero.tagline">
+      Finance professional with 3 years of experience, drawn to ambitious projects. Open to opportunities in startups and growth-stage companies in Paris.
     </p>
     <div class="hero-avail-top" style="margin-bottom:40px;margin-top:20px;">
-      <span class="dot-green"></span> Available from May 2026
+      <span class="dot-green"></span> <span data-i18n="hero.available">Available from May 2026</span>
     </div>
     <div class="hero-cta">
-      <a href="#contact" class="btn-primary">GET IN TOUCH</a>
-      <a href="#experience" class="btn-ghost">Experience</a>
+      <a href="#contact" class="btn-primary" data-i18n="hero.cta">GET IN TOUCH</a>
+      <a href="#experience" class="btn-ghost" data-i18n="hero.experience">Experience</a>
     </div>
   </div>
 </section>
@@ -1065,7 +1144,7 @@
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-header">
-    <h2 class="section-title">Track <em>Record</em></h2>
+    <h2 class="section-title" data-i18n-html="exp.title">Track <em>Record</em></h2>
   </div>
 
   <div class="timeline">
@@ -1073,38 +1152,38 @@
     <article class="tl-block reveal">
       <div class="tl-block-header">
         <div class="tl-block-header-text">
-          <h3 class="tl-role">M&amp;A Analyst — Renewable Energy (Latin America coverage)</h3>
+          <h3 class="tl-role" data-i18n="exp.job1.role">M&amp;A Analyst — Renewable Energy (Latin America)</h3>
           <div class="tl-company-name">BNP Paribas CIB</div>
           <div class="tl-meta">
-            <span class="tl-meta-item tl-meta-item--dates">Jun 2025 — Feb 2026</span>
+            <span class="tl-meta-item tl-meta-item--dates" data-i18n="exp.job1.dates">Jun 2025 — Feb 2026</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--duration">8 months</span>
+            <span class="tl-meta-item tl-meta-item--duration" data-i18n="exp.job1.duration">8 months</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--city">New York</span>
+            <span class="tl-meta-item tl-meta-item--city" data-i18n="exp.job1.city">New York</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--contract">Full time</span>
+            <span class="tl-meta-item tl-meta-item--contract" data-i18n="exp.job1.contract">Full time</span>
           </div>
         </div>
       </div>
 
       <ul class="tl-bullets">
-        <li>Executed 2 renewable asset M&amp;A transactions (100MW and 1GW)
+        <li><span data-i18n="exp.job1.b1">Executed 2 renewable asset M&amp;A transactions (100MW and 1GW)</span>
           <ul>
-            <li>Prepared strategic notes, briefings, and pre/post-meeting summaries</li>
-            <li>Produced presentation materials for marketing initiatives and internal analyses</li>
-            <li>Built complex financial models including data analysis, cash flow projections and ROI estimation</li>
+            <li data-i18n="exp.job1.b1a">Prepared strategic notes, briefings, and pre/post-meeting summaries</li>
+            <li data-i18n="exp.job1.b1b">Produced presentation materials for marketing initiatives and internal analyses</li>
+            <li data-i18n="exp.job1.b1c">Built complex financial models including data analysis, cash flow projections and ROI estimation</li>
           </ul>
         </li>
-        <li>Led a roadshow to promote the sale of renewable assets to international investors
+        <li><span data-i18n="exp.job1.b2">Led a roadshow to promote the sale of renewable assets to international investors</span>
           <ul>
-            <li>Mapped and qualified 50+ target investors</li>
-            <li>Prepared discussion materials, initial outreach, follow-ups, and NDA negotiations</li>
+            <li data-i18n="exp.job1.b2a">Mapped and qualified 50+ target investors</li>
+            <li data-i18n="exp.job1.b2b">Prepared discussion materials, initial outreach, follow-ups, and NDA negotiations</li>
           </ul>
         </li>
-        <li>Managed 2 due diligence processes (sell-side and buy-side)
+        <li><span data-i18n="exp.job1.b3">Managed 2 due diligence processes (sell-side and buy-side)</span>
           <ul>
-            <li>Data room structuring, Q&amp;A coordination between advisors and companies, scheduling and leading weekly meetings (30+ people)</li>
-            <li>Developed an AI-powered dashboard to process 1,000+ incoming questions, identify recurring themes, strategically prioritize and reduce to 300 key questions</li>
+            <li data-i18n="exp.job1.b3a">Data room structuring, Q&amp;A coordination between advisors and companies, scheduling and leading weekly meetings (30+ people)</li>
+            <li data-i18n="exp.job1.b3b">Developed an AI-powered dashboard to process 1,000+ incoming questions, identify recurring themes, strategically prioritize and reduce to 300 key questions</li>
           </ul>
         </li>
       </ul>
@@ -1113,31 +1192,31 @@
     <article class="tl-block reveal reveal-delay-1">
       <div class="tl-block-header">
         <div class="tl-block-header-text">
-          <h3 class="tl-role">Leveraged &amp; Acquisition Finance</h3>
+          <h3 class="tl-role" data-i18n="exp.job2.role">Leveraged &amp; Acquisition Finance</h3>
           <div class="tl-company-name">BNP Paribas CIB</div>
           <div class="tl-meta">
-            <span class="tl-meta-item tl-meta-item--dates">Mar 2023 — Sep 2024</span>
+            <span class="tl-meta-item tl-meta-item--dates" data-i18n="exp.job2.dates">Mar 2023 — Sep 2024</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--duration">18 months</span>
+            <span class="tl-meta-item tl-meta-item--duration" data-i18n="exp.job2.duration">18 months</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--city">Paris</span>
+            <span class="tl-meta-item tl-meta-item--city" data-i18n="exp.job2.city">Paris</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--contract">Internship + Apprenticeship</span>
+            <span class="tl-meta-item tl-meta-item--contract" data-i18n="exp.job2.contract">Internship + Apprenticeship</span>
           </div>
         </div>
       </div>
 
       <ul class="tl-bullets">
-        <li>Executed 5 debt raises for M&amp;A and refinancing transactions
+        <li><span data-i18n="exp.job2.b1">Executed 5 debt raises for M&amp;A and refinancing transactions</span>
           <ul>
-            <li>Built 10+ financial models (debt capacity, repayment scenarios)</li>
-            <li>Prepared business cases to secure loans from international investors</li>
+            <li data-i18n="exp.job2.b1a">Built 10+ financial models (debt capacity, repayment scenarios)</li>
+            <li data-i18n="exp.job2.b1b">Prepared business cases to secure loans from international investors</li>
           </ul>
         </li>
-        <li>Managed strategic client relationships (large corporates and investment funds)
+        <li><span data-i18n="exp.job2.b2">Managed strategic client relationships (large corporates and investment funds)</span>
           <ul>
-            <li>Proposed 5+ unsolicited pitch ideas, developed outreach strategies and created presentation materials</li>
-            <li>VBA automation of Bloomberg data analysis and PowerPoint dashboards</li>
+            <li data-i18n="exp.job2.b2a">Proposed 5+ unsolicited pitch ideas, developed outreach strategies and created presentation materials</li>
+            <li data-i18n="exp.job2.b2b">VBA automation of Bloomberg data analysis and PowerPoint dashboards</li>
           </ul>
         </li>
       </ul>
@@ -1146,25 +1225,25 @@
     <article class="tl-block reveal reveal-delay-2">
       <div class="tl-block-header">
         <div class="tl-block-header-text">
-          <h3 class="tl-role">Private Equity Analyst</h3>
+          <h3 class="tl-role" data-i18n="exp.job3.role">Private Equity Analyst</h3>
           <div class="tl-company-name">Activa Capital</div>
           <div class="tl-meta">
-            <span class="tl-meta-item tl-meta-item--dates">Sep 2022 — Mar 2023</span>
+            <span class="tl-meta-item tl-meta-item--dates" data-i18n="exp.job3.dates">Sep 2022 — Mar 2023</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--duration">6 months</span>
+            <span class="tl-meta-item tl-meta-item--duration" data-i18n="exp.job3.duration">6 months</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--city">Paris</span>
+            <span class="tl-meta-item tl-meta-item--city" data-i18n="exp.job3.city">Paris</span>
             <span class="tl-meta-sep">●</span>
-            <span class="tl-meta-item tl-meta-item--contract">Internship</span>
+            <span class="tl-meta-item tl-meta-item--contract" data-i18n="exp.job3.contract">Internship</span>
           </div>
         </div>
       </div>
 
       <ul class="tl-bullets">
-        <li>Sourced and screened 100+ investment opportunities (EBITDA €2m–€10m)</li>
-        <li>Produced 20+ synthetic one-pagers on target companies</li>
-        <li>10+ discovery interviews with executives; 3 quantitative market studies</li>
-        <li>Drafted investment memo covering strategic, operational &amp; financial considerations</li>
+        <li data-i18n="exp.job3.b1">Sourced and screened 100+ investment opportunities (EBITDA €2m–€10m)</li>
+        <li data-i18n="exp.job3.b2">Produced 20+ synthetic one-pagers on target companies</li>
+        <li data-i18n="exp.job3.b3">10+ discovery interviews with executives; 3 quantitative market studies (B2B SaaS healthcare, B2C retail airports…)</li>
+        <li data-i18n="exp.job3.b4">Drafted investment memo covering strategic, operational &amp; financial considerations</li>
       </ul>
     </article>
 
@@ -1174,40 +1253,40 @@
 <!-- EDUCATION -->
 <section id="education">
   <div class="section-header">
-    <h2 class="section-title">Edu<em>cation</em></h2>
+    <h2 class="section-title" data-i18n-html="edu.title">Edu<em>cation</em></h2>
   </div>
 
   <div class="edu-grid">
     <div class="edu-card reveal">
-      <div class="edu-degree">AI Product Builder</div>
+      <div class="edu-degree" data-i18n="edu.card1.degree">AI Product Builder</div>
       <div class="edu-school">Le Wagon</div>
       <div class="edu-meta">
-        <span>June 2026</span>
+        <span data-i18n="edu.card1.date">June 2026</span>
         <span class="edu-meta-sep">●</span>
         <span>Paris</span>
       </div>
       <div class="edu-divider"></div>
       <ul class="edu-bullets">
-        <li>Design and deployment of end-user products (web apps, SaaS) and internal AI tools (internal RAG chatbots, agent automation, dashboards, data analysis, etc.)</li>
+        <li data-i18n="edu.card1.b1">Design and deployment of internal AI tools (internal RAG chatbots, agent automation, dashboards, data analysis, etc.) and end-user products (web apps, SaaS).</li>
       </ul>
     </div>
     <div class="edu-card reveal reveal-delay-1">
-      <div class="edu-degree">Master in Management</div>
+      <div class="edu-degree" data-i18n="edu.card2.degree">Master in Management</div>
       <div class="edu-school">ESCP Business School</div>
       <div class="edu-meta">
         <span>2020 – 2024</span>
         <span class="edu-meta-sep">●</span>
-        <span>London &amp; Paris</span>
+        <span data-i18n="edu.card2.city">London &amp; Paris</span>
       </div>
       <div class="edu-divider"></div>
       <ul class="edu-bullets">
-        <li>Courses: Corporate Finance, Project Finance, climate change and energy transition</li>
-        <li>Research thesis on carbon offsetting</li>
-        <li>Societies: ESCP Energy Transition Network, Extreme Sports society</li>
+        <li data-i18n="edu.card2.b1">Courses: Corporate Finance, Project Finance, climate change and energy transition</li>
+        <li data-i18n="edu.card2.b2">Research thesis on carbon offsetting</li>
+        <li data-i18n="edu.card2.b3">Societies: ESCP Energy Transition Network, Extreme Sports society</li>
       </ul>
     </div>
     <div class="edu-card reveal reveal-delay-2">
-      <div class="edu-degree">Preparatory Classes</div>
+      <div class="edu-degree" data-i18n="edu.card3.degree">Preparatory Classes</div>
       <div class="edu-school">Institution Saint Jean</div>
       <div class="edu-meta">
         <span>2018 – 2020</span>
@@ -1216,7 +1295,7 @@
       </div>
       <div class="edu-divider"></div>
       <ul class="edu-bullets">
-        <li>Courses: Mathematics, economics, languages</li>
+        <li data-i18n="edu.card3.b1">Courses: Mathematics, economics, philosophy, languages</li>
       </ul>
     </div>
   </div>
@@ -1225,62 +1304,62 @@
 <!-- WHAT I BRING -->
 <section id="skills">
   <div class="section-header">
-    <h2 class="section-title">What I <em>Bring</em></h2>
+    <h2 class="section-title" data-i18n-html="bring.title">What I <em>Bring</em></h2>
   </div>
 
   <div class="bring-grid">
     <div class="bring-card bring-card--gradient reveal">
-      <div class="bring-label">Execution &amp; Delivery</div>
-      <div class="bring-title">7 deal executions, 2 years experience</div>
-      <div class="bring-text">Result-oriented, delivering high-quality outputs while managing multiple priorities. Clear and concise presentation of results.</div>
+      <div class="bring-label" data-i18n="bring.c1.label">Execution &amp; Delivery</div>
+      <div class="bring-title" data-i18n="bring.c1.title">7 deal executions, 3 years experience</div>
+      <div class="bring-text" data-i18n="bring.c1.text">Result-oriented, delivering high-quality outputs while managing multiple priorities. Clear and concise presentation of results.</div>
       <div class="bring-achievement">
         <div class="bring-achievement-label">Track record</div>
-        <div class="bring-achievement-text">Contributed to 7 M&amp;A deals in 2 years of investment banking experience</div>
+        <div class="bring-achievement-text" data-i18n="bring.c1.ach">Contributed to 7 M&amp;A deals in 3 years of investment banking experience.</div>
       </div>
     </div>
     <div class="bring-card bring-card--dark reveal reveal-delay-1">
-      <div class="bring-label">Project Management</div>
-      <div class="bring-title">End-to-end ownership</div>
-      <div class="bring-text">Full autonomy from objective-setting to execution. Coordination of internal and external stakeholders, including management teams, advisors, and investors.</div>
+      <div class="bring-label" data-i18n="bring.c2.label">Project Management</div>
+      <div class="bring-title" data-i18n="bring.c2.title">End-to-end ownership</div>
+      <div class="bring-text" data-i18n="bring.c2.text">Full autonomy from objective-setting to execution. Coordination of internal and external stakeholders, including management teams, advisors, and investors.</div>
       <div class="bring-achievement">
         <div class="bring-achievement-label">Track record</div>
-        <div class="bring-achievement-text">Experience managing M&amp;A due diligences, including advisor coordination and process structuring</div>
+        <div class="bring-achievement-text" data-i18n="bring.c2.ach">Experience managing M&amp;A due diligences, including advisor coordination and process structuring.</div>
       </div>
     </div>
     <div class="bring-card bring-card--dark reveal reveal-delay-2">
-      <div class="bring-label">Strategic Research &amp; Analysis</div>
-      <div class="bring-title">Insightful and concise</div>
-      <div class="bring-text">Quantitative market research and synthetic one-pagers on target companies. Leveraging AI tools and cross-referencing multiple databases.</div>
+      <div class="bring-label" data-i18n="bring.c3.label">Strategic Research &amp; Analysis</div>
+      <div class="bring-title" data-i18n="bring.c3.title">Insightful and concise</div>
+      <div class="bring-text" data-i18n="bring.c3.text">Quantitative market research and synthetic one-pagers. Leveraging AI tools and cross-referencing multiple databases.</div>
       <div class="bring-achievement">
         <div class="bring-achievement-label">Track record</div>
-        <div class="bring-achievement-text">Private Equity experience in sourcing French small-cap targets</div>
+        <div class="bring-achievement-text" data-i18n="bring.c3.ach">Private Equity experience in sourcing French small-cap targets.</div>
       </div>
     </div>
     <div class="bring-card bring-card--gradient reveal reveal-delay-1">
-      <div class="bring-label">Business Development</div>
-      <div class="bring-title">From cold to close</div>
-      <div class="bring-text">Cold outreach and first contacts with founders and executives via email, LinkedIn, and calls. Proactive follow-up focused on long-term relationships.</div>
+      <div class="bring-label" data-i18n="bring.c4.label">Business Development</div>
+      <div class="bring-title" data-i18n="bring.c4.title">From cold to close</div>
+      <div class="bring-text" data-i18n="bring.c4.text">Cold outreach and first contacts with founders and executives via email, LinkedIn, and calls. Proactive follow-up focused on long-term relationships.</div>
       <div class="bring-achievement">
         <div class="bring-achievement-label">Track record</div>
-        <div class="bring-achievement-text">Demonstrated ability in direct communication with founders and executives in M&amp;A projects</div>
+        <div class="bring-achievement-text" data-i18n="bring.c4.ach">Demonstrated ability in direct communication with founders and executives in M&amp;A projects.</div>
       </div>
     </div>
     <div class="bring-card bring-card--gradient reveal reveal-delay-2">
-      <div class="bring-label">Curiosity &amp; Creativity</div>
-      <div class="bring-title">Always learning</div>
-      <div class="bring-text">Strong intellectual curiosity and drive to acquire new skills and master new tools. Comfortable generating fresh ideas and experimenting with bold approaches.</div>
+      <div class="bring-label" data-i18n="bring.c5.label">Curiosity &amp; Creativity</div>
+      <div class="bring-title" data-i18n="bring.c5.title">Always learning</div>
+      <div class="bring-text" data-i18n="bring.c5.text">Strong intellectual curiosity and drive to acquire new skills and master new tools. Comfortable generating fresh ideas and experimenting with bold approaches.</div>
       <div class="bring-achievement">
         <div class="bring-achievement-label">Track record</div>
-        <div class="bring-achievement-text">Proven ability to specialize quickly in a sector (energy), with the ambition to build expertises on new sectors</div>
+        <div class="bring-achievement-text" data-i18n="bring.c5.ach">Proven ability to specialize quickly in a sector (energy), with the ambition to build expertise in new sectors.</div>
       </div>
     </div>
     <div class="bring-card bring-card--dark reveal reveal-delay-3">
-      <div class="bring-label">AI Automation</div>
-      <div class="bring-title">Automated workflows</div>
-      <div class="bring-text">Design of prompts, skills, and AI agents from the ground up. Multi-step workflows combining research, synthesis, and deliverable production — with minimal manual input.</div>
+      <div class="bring-label" data-i18n="bring.c6.label">AI Automation</div>
+      <div class="bring-title" data-i18n="bring.c6.title">Automated workflows</div>
+      <div class="bring-text" data-i18n="bring.c6.text">Design of prompts, skills, and AI agents from the ground up. Multi-step workflows combining research, synthesis, and deliverable production — with minimal manual input.</div>
       <div class="bring-achievement">
         <div class="bring-achievement-label">Track record</div>
-        <div class="bring-achievement-text">Development of an AI agent generating complete market studies: research, analysis and formatting into PPTs</div>
+        <div class="bring-achievement-text" data-i18n="bring.c6.ach">Development of an AI agent generating complete market studies: research, analysis and formatting into PPTs.</div>
       </div>
     </div>
 
@@ -1290,30 +1369,30 @@
 <!-- AI PROJECTS -->
 <section id="projects">
   <div class="section-header">
-    <h2 class="section-title">AI <em>Projects</em></h2>
+    <h2 class="section-title" data-i18n-html="proj.title">AI <em>Projects</em></h2>
   </div>
 
   <div class="carousel-track-wrap">
     <div class="carousel-track">
       <div class="proj-card">
-        <div class="proj-card-tag">Web</div>
-        <div class="proj-card-name">Personal Landing Page</div>
-        <div class="proj-card-desc">This very webpage</div>
+        <div class="proj-card-tag" data-i18n="proj.p1.tag">Web</div>
+        <div class="proj-card-name" data-i18n="proj.p1.name">Personal Landing Page</div>
+        <div class="proj-card-desc" data-i18n="proj.p1.desc">This very webpage</div>
       </div>
       <div class="proj-card">
-        <div class="proj-card-tag">SaaS</div>
-        <div class="proj-card-name">Habit Tracking Dashboard</div>
-        <div class="proj-card-desc">Full-stack SaaS, including professional goals, health KPIs, running plan and personal finances</div>
+        <div class="proj-card-tag" data-i18n="proj.p2.tag">SaaS &amp; Mobile App</div>
+        <div class="proj-card-name" data-i18n="proj.p2.name">Habit Tracking Dashboard</div>
+        <div class="proj-card-desc" data-i18n="proj.p2.desc">Full-stack SaaS and mobile application, including professional goals, health KPIs, running plan and personal finances</div>
       </div>
       <div class="proj-card">
-        <div class="proj-card-tag">AI Agent</div>
-        <div class="proj-card-name">Market Study Agent</div>
-        <div class="proj-card-desc">AI agent generating complete market studies to elite consulting-firm standards — research, analysis and formatting into PowerPoint</div>
+        <div class="proj-card-tag" data-i18n="proj.p3.tag">AI Agent</div>
+        <div class="proj-card-name" data-i18n="proj.p3.name">Market Study Agent</div>
+        <div class="proj-card-desc" data-i18n="proj.p3.desc">AI agent generating complete market studies to the standards of elite consulting firms — research, analysis and formatting into PowerPoint</div>
       </div>
       <div class="proj-card">
-        <div class="proj-card-tag">Automation</div>
-        <div class="proj-card-name">Professional Opportunities Monitoring Agent</div>
-        <div class="proj-card-desc">Opportunity detection, application writing and LinkedIn outreach automation</div>
+        <div class="proj-card-tag" data-i18n="proj.p4.tag">Automation</div>
+        <div class="proj-card-name" data-i18n="proj.p4.name">Professional Opportunities Monitoring Agent</div>
+        <div class="proj-card-desc" data-i18n="proj.p4.desc">Opportunity detection, application drafting, and automated LinkedIn outreach</div>
       </div>
     </div>
   </div>
@@ -1323,53 +1402,53 @@
 <!-- OTHER EXPERIENCES -->
 <section id="other-experiences">
   <div class="section-header">
-    <h2 class="section-title">Other <em>Experiences</em></h2>
+    <h2 class="section-title" data-i18n-html="other.title">Other <em>Experiences</em></h2>
   </div>
 
   <div class="timeline-right">
 
     <article class="tl-block-right reveal">
-      <h3 class="tl-role">Waiter</h3>
+      <h3 class="tl-role" data-i18n="other.j1.role">Waiter</h3>
       <div class="tl-company-name">Whalebrigre</div>
       <div class="tl-meta">
-        <span class="tl-meta-item tl-meta-item--dates">Summer 2022</span>
+        <span class="tl-meta-item tl-meta-item--dates" data-i18n="other.j1.dates">Summer 2022</span>
         <span class="tl-meta-sep">●</span>
-        <span class="tl-meta-item tl-meta-item--city">Sydney (Australia)</span>
+        <span class="tl-meta-item tl-meta-item--city" data-i18n="other.j1.city">Sydney (Australia)</span>
       </div>
-      <div class="tl-desc">Service in a French restaurant facing the Sydney Opera House</div>
+      <div class="tl-desc" data-i18n="other.j1.desc">Service in a French restaurant facing the Sydney Opera House</div>
     </article>
 
     <article class="tl-block-right reveal reveal-delay-1">
-      <h3 class="tl-role">Humanitarian Volunteer</h3>
-      <div class="tl-company-name">NGO</div>
+      <h3 class="tl-role" data-i18n="other.j2.role">Humanitarian Volunteer</h3>
+      <div class="tl-company-name" data-i18n="other.j2.company">NGO</div>
       <div class="tl-meta">
-        <span class="tl-meta-item tl-meta-item--dates">Summer 2021</span>
+        <span class="tl-meta-item tl-meta-item--dates" data-i18n="other.j2.dates">Summer 2021</span>
         <span class="tl-meta-sep">●</span>
-        <span class="tl-meta-item tl-meta-item--city">Ando Centre (Togo)</span>
+        <span class="tl-meta-item tl-meta-item--city" data-i18n="other.j2.city">Ando Centre (Togo)</span>
       </div>
-      <div class="tl-desc">Humanitarian mission in a village in Togo</div>
+      <div class="tl-desc" data-i18n="other.j2.desc">Humanitarian mission in a village in Togo</div>
     </article>
 
     <article class="tl-block-right reveal reveal-delay-2">
-      <h3 class="tl-role">Bartender</h3>
+      <h3 class="tl-role" data-i18n="other.j3.role">Bartender</h3>
       <div class="tl-company-name">Euston Rocket Pub</div>
       <div class="tl-meta">
-        <span class="tl-meta-item tl-meta-item--dates">Summer 2018</span>
+        <span class="tl-meta-item tl-meta-item--dates" data-i18n="other.j3.dates">Summer 2018</span>
         <span class="tl-meta-sep">●</span>
-        <span class="tl-meta-item tl-meta-item--city">London (UK)</span>
+        <span class="tl-meta-item tl-meta-item--city" data-i18n="other.j3.city">London (UK)</span>
       </div>
-      <div class="tl-desc">Bartender in a pub near London's Saint Pancras station</div>
+      <div class="tl-desc" data-i18n="other.j3.desc">Bartender in a pub near London's Saint Pancras station</div>
     </article>
 
     <article class="tl-block-right reveal reveal-delay-3">
-      <h3 class="tl-role">Cowboy</h3>
+      <h3 class="tl-role" data-i18n="other.j4.role">Cowboy</h3>
       <div class="tl-company-name">Descheemaker's Ranch</div>
       <div class="tl-meta">
-        <span class="tl-meta-item tl-meta-item--dates">Summer 2017</span>
+        <span class="tl-meta-item tl-meta-item--dates" data-i18n="other.j4.dates">Summer 2017</span>
         <span class="tl-meta-sep">●</span>
-        <span class="tl-meta-item tl-meta-item--city">Lewistown (Montana, USA)</span>
+        <span class="tl-meta-item tl-meta-item--city" data-i18n="other.j4.city">Lewistown (Montana, USA)</span>
       </div>
-      <div class="tl-desc">Cowboy on a rural American ranch in Montana</div>
+      <div class="tl-desc" data-i18n="other.j4.desc">Cowboy on a rural American ranch in Montana</div>
     </article>
 
   </div>
@@ -1379,38 +1458,38 @@
 <div id="extras">
   <div class="extras-grid">
     <div class="extras-block">
-      <div class="extras-block-title">Languages</div>
+      <div class="extras-block-title" data-i18n="extras.lang">Languages</div>
       <div class="lang-row">
         <div class="lang-item">
-          <span class="lang-name">French</span>
-          <span class="lang-level">Native</span>
+          <span class="lang-name" data-i18n="extras.langFr">French</span>
+          <span class="lang-level" data-i18n="extras.lvlNative">Native</span>
         </div>
         <div class="lang-item">
-          <span class="lang-name">English</span>
-          <span class="lang-level">Fluent</span>
+          <span class="lang-name" data-i18n="extras.langEn">English</span>
+          <span class="lang-level" data-i18n="extras.lvlFluent">Fluent</span>
         </div>
         <div class="lang-item">
-          <span class="lang-name">Spanish</span>
-          <span class="lang-level">Fluent</span>
+          <span class="lang-name" data-i18n="extras.langEs">Spanish</span>
+          <span class="lang-level" data-i18n="extras.lvlFluent2">Fluent</span>
         </div>
       </div>
     </div>
     <div class="extras-block">
-      <div class="extras-block-title">Interests</div>
+      <div class="extras-block-title" data-i18n="extras.interests">Interests</div>
       <div class="chips-col">
-        <div class="chip">Energy Transition</div>
-        <div class="chip">Tech &amp; Startups</div>
-        <div class="chip">Vibe Coding</div>
-        <div class="chip">Wellness &amp; Health</div>
+        <div class="chip" data-i18n="extras.i1">Energy Transition</div>
+        <div class="chip" data-i18n="extras.i2">Tech &amp; Startups</div>
+        <div class="chip" data-i18n="extras.i3">Vibe Coding</div>
+        <div class="chip" data-i18n="extras.i4">Wellness &amp; Health</div>
       </div>
     </div>
     <div class="extras-block">
-      <div class="extras-block-title">Hobbies</div>
+      <div class="extras-block-title" data-i18n="extras.hobbies">Hobbies</div>
       <div class="chips-col">
-        <div class="chip">Muay Thai</div>
-        <div class="chip">Padel</div>
-        <div class="chip">Running</div>
-        <div class="chip">Reading</div>
+        <div class="chip" data-i18n="extras.h1">Muay Thai</div>
+        <div class="chip" data-i18n="extras.h2">Padel</div>
+        <div class="chip" data-i18n="extras.h3">Running</div>
+        <div class="chip" data-i18n="extras.h4">Reading</div>
       </div>
     </div>
   </div>
@@ -1420,8 +1499,8 @@
 <div id="contact">
   <canvas id="contact-canvas"></canvas>
   <div class="contact-left">
-    <div class="big-text">Let's<br><em>connect.</em></div>
-    <a href="mailto:pironadam@gmail.com" class="btn-primary" style="display:inline-block; text-decoration:none;">
+    <div class="big-text" data-i18n-html="contact.big">Let's<br><em>connect.</em></div>
+    <a href="mailto:pironadam@gmail.com" class="btn-primary" style="display:inline-block; text-decoration:none;" data-i18n="contact.cta">
       GET IN TOUCH
     </a>
   </div>
@@ -1436,22 +1515,22 @@
     </a>
     <a href="mailto:pironadam@gmail.com" class="contact-link-item">
       <div>
-        <div class="cl-label">Email</div>
+        <div class="cl-label" data-i18n="contact.email">Email</div>
         <div class="cl-value">pironadam@gmail.com</div>
       </div>
       <div class="cl-arrow">↗</div>
     </a>
     <a href="tel:+33665659622" class="contact-link-item">
       <div>
-        <div class="cl-label">Phone</div>
+        <div class="cl-label" data-i18n="contact.phone">Phone</div>
         <div class="cl-value">+33 6 65 65 96 22</div>
       </div>
       <div class="cl-arrow">↗</div>
     </a>
     <div class="contact-link-item" style="cursor:default;">
       <div>
-        <div class="cl-label">Location</div>
-        <div class="cl-value">Paris, France</div>
+        <div class="cl-label" data-i18n="contact.location">Location</div>
+        <div class="cl-value" data-i18n="contact.locationVal">Paris, France</div>
       </div>
       <div class="cl-arrow" style="opacity:0.3;">—</div>
     </div>
@@ -1462,8 +1541,254 @@
 <!-- FOOTER -->
 <footer>
   <div class="f-name">Adam Piron</div>
-  <div class="f-note">Paris, France · 2026</div>
+  <div class="f-note" data-i18n="footer.note">Paris, France · 2026</div>
 </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SCRIPT 0 — LANGUAGE SWITCH (EN / FR)
+       Translates all text marked with data-i18n / data-i18n-html attributes
+       when the user toggles the language switch in the nav.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <script>
+    const I18N = {
+      fr: {
+        // NAV
+        "nav.track":       "Parcours",
+        "nav.education":   "Formation",
+        "nav.bring":       "Ce que j'apporte",
+        "nav.projects":    "Projets IA",
+        "nav.other":       "Autres Expériences",
+        "nav.contact":     "Contact",
+
+        // HERO
+        "hero.tagline":    "Analyste avec 3 ans d'expérience en finance, attiré par les projets ambitieux.\nOuvert aux opportunités dans des startups et entreprises en forte croissance à Paris.",
+        "hero.available":  "Disponible à partir de mai 2026",
+        "hero.cta":        "ME CONTACTER",
+        "hero.experience": "Expérience",
+
+        // EXPERIENCE
+        "exp.title":       "<em>Parcours</em>",
+
+        "exp.job1.role":     "Analyste M&A — Énergies renouvelables (Amérique latine)",
+        "exp.job1.dates":    "Juin 2025 — Févr. 2026",
+        "exp.job1.duration": "8 mois",
+        "exp.job1.city":     "New York",
+        "exp.job1.contract": "CDI",
+        "exp.job1.b1":       "Exécution de 2 opérations de M&A d'actifs renouvelables",
+        "exp.job1.b1a":      "Préparation de notes stratégiques, briefings et synthèses pré/post réunions",
+        "exp.job1.b1b":      "Production de supports de présentation pour des actions marketing et analyses internes",
+        "exp.job1.b1c":      "Construction de 5+ modèles financiers complexes incluant projections des cash flows et du ROI",
+        "exp.job1.b2":       "Conduite d'un roadshow visant à promouvoir la vente d'actifs renouvelables auprès d'investisseurs internationaux",
+        "exp.job1.b2a":      "Cartographie et qualification de 50+ investisseurs cibles",
+        "exp.job1.b2b":      "Préparation des supports de discussion, outreach initial, follow-ups, et négociation des NDAs",
+        "exp.job1.b3":       "Responsable du pilotage de 2 due diligences (sell-side et buy-side)",
+        "exp.job1.b3a":      "Structuration des data rooms, coordination des Q&A entre consultants et entreprises, implémentation du calendrier et animation des réunions hebdomadaires (30+ personnes)",
+        "exp.job1.b3b":      "Développement d'un dashboard par IA visant à traiter 1 000+ questions entrantes, identification des récurrences, priorisation stratégique et réduction à 300 questions clés",
+
+        "exp.job2.role":     "Leveraged & Acquisition Finance",
+        "exp.job2.dates":    "Mars 2023 — Sept. 2024",
+        "exp.job2.duration": "18 mois",
+        "exp.job2.city":     "Paris",
+        "exp.job2.contract": "Stage + Alternance",
+        "exp.job2.b1":       "Exécution de 5 levées de dette pour des opérations de M&A et de refinancements",
+        "exp.job2.b1a":      "Construction de 10+ modèles financiers (capacité d'endettement, scénarios de remboursement)",
+        "exp.job2.b1b":      "Élaboration de business cases afin de sécuriser des prêts auprès d'investisseurs internationaux",
+        "exp.job2.b2":       "Animation de relations clients stratégiques (grands groupes et fonds d'investissement)",
+        "exp.job2.b2a":      "Proposition de 5+ idées de pitchs non-sollicités, élaboration d'une stratégie d'approche et création de supports de présentation",
+        "exp.job2.b2b":      "Automatisation VBA d'analyse de données Bloomberg et de dashboards sur PowerPoint",
+
+        "exp.job3.role":     "Analyste Private Equity",
+        "exp.job3.dates":    "Sept. 2022 — Mars 2023",
+        "exp.job3.duration": "6 mois",
+        "exp.job3.city":     "Paris",
+        "exp.job3.contract": "Stage",
+        "exp.job3.b1":       "Sourcing et screening de 100+ opportunités d'investissement (EBITDA €2m–€10m)",
+        "exp.job3.b2":       "Réalisation de 20+ profils synthétiques d'entreprises et analyses financières détaillées",
+        "exp.job3.b3":       "10+ entretiens de découverte avec des dirigeants ; 3 études de marché chiffrées sur des secteurs de niche (SaaS B2B santé, retail B2C aéroports…)",
+        "exp.job3.b4":       "Élaboration d'un pitch deck visant à convaincre des fondateurs de SaaS en phase de cession",
+
+        // EDUCATION
+        "edu.title":         "For<em>mation</em>",
+        "edu.card1.degree":  "AI Product Builder",
+        "edu.card1.date":    "Juin 2026",
+        "edu.card1.b1":      "Conception et déploiement d'outils IA internes (chatbots RAG internes, automatisation par agents, dashboards, data analyse, etc), et de produits end-user (applications web, SaaS)",
+        "edu.card2.degree":  "Master in Management",
+        "edu.card2.city":    "Londres & Paris",
+        "edu.card2.b1":      "Cours : Corporate Finance, Project Finance, changement climatique et transition énergétique",
+        "edu.card2.b2":      "Mémoire de recherche sur la compensation carbone",
+        "edu.card2.b3":      "Associations : ESCP Energy Transition Network, Bureau des Sports Extrêmes",
+        "edu.card3.degree":  "Classes préparatoires",
+        "edu.card3.b1":      "Matières : mathématiques, économie, philosophie, langues",
+
+        // WHAT I BRING
+        "bring.title":     "Ce que j'<em>apporte</em>",
+        "bring.c1.label":  "Exécution & LIVRABLES",
+        "bring.c1.title":  "7 transactions exécutées, 3 ans d'expérience",
+        "bring.c1.text":   "Orienté résultats, délivre des livrables de haute qualité tout en gérant plusieurs priorités de front. Présentation claire et concise des résultats.",
+        "bring.c1.ach":    "Contribution à 7 transactions M&A en 3 ans d'expérience en banque d'investissement.",
+        "bring.c2.label":  "Gestion de projet",
+        "bring.c2.title":  "Proactif et responsable",
+        "bring.c2.text":   "Autonomie complète, de la définition des objectifs à l'exécution. Coordination des parties prenantes internes et externes.",
+        "bring.c2.ach":    "Expérience en pilotage de due diligences M&A, incluant la coordination des conseillers et la structuration des processus.",
+        "bring.c3.label":  "Analyse stratégique",
+        "bring.c3.title":  "Pertinent et synthétique",
+        "bring.c3.text":   "Études de marché quantitatives et one-pagers synthétiques. Utilisation d'outils d'IA et croisement de plusieurs bases de données.",
+        "bring.c3.ach":    "Expérience en Private Equity dans le sourcing de cibles small-cap françaises.",
+        "bring.c4.label":  "Business Development",
+        "bring.c4.title":  "Du cold contact au closing",
+        "bring.c4.text":   "Prospection à froid et premiers contacts avec fondateurs et dirigeants par email, LinkedIn et téléphone. Suivi proactif et construction de relations durables.",
+        "bring.c4.ach":    "Capacité démontrée à dialoguer en direct avec fondateurs et dirigeants dans le cadre de projets M&A.",
+        "bring.c5.label":  "Curiosité & Créativité",
+        "bring.c5.title":  "Apprentissage constant",
+        "bring.c5.text":   "Forte curiosité intellectuelle et envie d'acquérir de nouvelles compétences et de maîtriser de nouveaux outils. À l'aise pour générer des idées neuves et expérimenter des approches audacieuses.",
+        "bring.c5.ach":    "Capacité prouvée à me spécialiser rapidement sur un secteur (énergie), avec l'ambition de développer une expertise sur de nouveaux secteurs.",
+        "bring.c6.label":  "Automatisation IA",
+        "bring.c6.title":  "Workflows automatisés",
+        "bring.c6.text":   "Conception de prompts, skills et agents IA from scratch. Workflows multi-étapes combinant recherche, synthèse et production de livrables — avec un minimum d'intervention manuelle.",
+        "bring.c6.ach":    "Développement d'un agent IA générant des études de marché complètes : recherche, analyse et mise en forme PowerPoint.",
+
+        // AI PROJECTS
+        "proj.title":      "Projets <em>IA</em>",
+        "proj.p1.tag":     "Web",
+        "proj.p1.name":    "Page personnelle",
+        "proj.p1.desc":    "Cette page web même",
+        "proj.p2.tag":     "SaaS & Application mobile",
+        "proj.p2.name":    "Dashboard de suivi d'habitudes",
+        "proj.p2.desc":    "Application SaaS et mobile full-stack couvrant objectifs professionnels, KPIs santé, plan de course à pied et finances personnelles",
+        "proj.p3.tag":     "Agent IA",
+        "proj.p3.name":    "Agent d'études de marché",
+        "proj.p3.desc":    "Agent IA générant des études de marché complètes aux standards des cabinets de conseil d'élite — recherche, analyse et mise en forme PowerPoint",
+        "proj.p4.tag":     "Automatisation",
+        "proj.p4.name":    "Agent de veille d'opportunités professionnelles",
+        "proj.p4.desc":    "Détection d'opportunités, rédaction de candidatures et automatisation des prises de contact LinkedIn",
+
+        // OTHER EXPERIENCES
+        "other.title":     "Autres <em>Expériences</em>",
+        "other.j1.role":   "Serveur",
+        "other.j1.dates":  "Été 2022",
+        "other.j1.city":   "Sydney (Australie)",
+        "other.j1.desc":   "Service en salle dans un restaurant français face à l'Opéra de Sydney",
+        "other.j2.role":   "Bénévole humanitaire",
+        "other.j2.company":"ONG",
+        "other.j2.dates":  "Été 2021",
+        "other.j2.city":   "Centre Ando (Togo)",
+        "other.j2.desc":   "Mission humanitaire dans un village au Togo",
+        "other.j3.role":   "Barman",
+        "other.j3.dates":  "Été 2018",
+        "other.j3.city":   "Londres (Royaume-Uni)",
+        "other.j3.desc":   "Barman dans un pub près de la gare Saint Pancras à Londres",
+        "other.j4.role":   "Cowboy",
+        "other.j4.dates":  "Été 2017",
+        "other.j4.city":   "Lewistown (Montana, États-Unis)",
+        "other.j4.desc":   "Cowboy dans un ranch rural américain au Montana",
+
+        // EXTRAS
+        "extras.lang":      "Langues",
+        "extras.langFr":    "Français",
+        "extras.langEn":    "Anglais",
+        "extras.langEs":    "Espagnol",
+        "extras.lvlNative": "Langue maternelle",
+        "extras.lvlFluent": "Courant",
+        "extras.lvlFluent2":"Courant",
+        "extras.interests": "Centres d'intérêt",
+        "extras.i1":        "Transition énergétique",
+        "extras.i2":        "Tech & Start-ups",
+        "extras.i3":        "Vibe Coding",
+        "extras.i4":        "Bien-être & Santé",
+        "extras.hobbies":   "Loisirs",
+        "extras.h1":        "Muay Thaï",
+        "extras.h2":        "Padel",
+        "extras.h3":        "Course à pied",
+        "extras.h4":        "Lecture",
+
+        // CONTACT
+        "contact.big":         "Au plaisir<br><em>d'échanger.</em>",
+        "contact.cta":         "ME CONTACTER",
+        "contact.email":       "Email",
+        "contact.phone":       "Téléphone",
+        "contact.location":    "Localisation",
+        "contact.locationVal": "Paris, France",
+
+        // FOOTER
+        "footer.note":     "Paris, France · 2026"
+      }
+    };
+
+    (function () {
+      const root       = document.documentElement;
+      const switchEl   = document.getElementById('lang-switch');
+      const optionEls  = switchEl.querySelectorAll('.lang-switch-option');
+
+      // Cache the original English content the first time we touch each node
+      function cacheOriginal(el, attr) {
+        const cacheKey = attr === 'data-i18n-html' ? '_origHTML' : '_origText';
+        if (el[cacheKey] === undefined) {
+          el[cacheKey] = attr === 'data-i18n-html' ? el.innerHTML : el.textContent;
+        }
+        return el[cacheKey];
+      }
+
+      function applyLang(lang) {
+        const dict = I18N[lang] || null;
+
+        // data-i18n nodes (plain text)
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key  = el.getAttribute('data-i18n');
+          const orig = cacheOriginal(el, 'data-i18n');
+          if (dict && dict[key] != null) {
+            el.textContent = dict[key];
+          } else {
+            el.textContent = orig;
+          }
+        });
+
+        // data-i18n-html nodes (allow HTML, e.g. <em>, <br>)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+          const key  = el.getAttribute('data-i18n-html');
+          const orig = cacheOriginal(el, 'data-i18n-html');
+          if (dict && dict[key] != null) {
+            el.innerHTML = dict[key];
+          } else {
+            el.innerHTML = orig;
+          }
+        });
+
+        // Visual switch state
+        switchEl.setAttribute('data-lang', lang);
+        optionEls.forEach(o => {
+          o.classList.toggle('active', o.getAttribute('data-lang-opt') === lang);
+        });
+
+        // <html lang="..."> + persist
+        root.setAttribute('lang', lang);
+        try { localStorage.setItem('site-lang', lang); } catch (_) {}
+      }
+
+      // Click handlers
+      switchEl.addEventListener('click', () => {
+        const current = switchEl.getAttribute('data-lang') || 'en';
+        applyLang(current === 'en' ? 'fr' : 'en');
+      });
+      optionEls.forEach(opt => {
+        opt.addEventListener('click', (e) => {
+          e.stopPropagation();
+          applyLang(opt.getAttribute('data-lang-opt'));
+        });
+      });
+
+      // Initial language: saved preference or browser default (FR if French)
+      let initial = 'en';
+      try {
+        const saved = localStorage.getItem('site-lang');
+        if (saved === 'en' || saved === 'fr') {
+          initial = saved;
+        } else if ((navigator.language || '').toLowerCase().startsWith('fr')) {
+          initial = 'fr';
+        }
+      } catch (_) {}
+      applyLang(initial);
+    })();
+  </script>
 
   <!-- ═══════════════════════════════════════════════════════════════════
        SCRIPT 1 — UI BEHAVIOR
