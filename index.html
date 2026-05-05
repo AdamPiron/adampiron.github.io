@@ -942,6 +942,135 @@
     background: var(--brown-lt);
   }
 
+  /* ─── CV BUTTON (in nav) ─── */
+  .nav-cv-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: rgba(216,238,244,0.04);
+    font-size: 0.7rem !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase;
+    color: var(--text-dim) !important;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    line-height: 1;
+  }
+  .nav-cv-btn:hover {
+    color: var(--brown-lt) !important;
+    border-color: var(--brown-dim);
+    background: rgba(74,158,181,0.08);
+  }
+
+  /* ─── CV OVERLAY ─── */
+  .cv-overlay {
+    position: fixed; inset: 0;
+    z-index: 1000;
+    background: rgba(5,14,18,0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .cv-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .cv-overlay-card {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    height: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(12px);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+  }
+  .cv-overlay.open .cv-overlay-card {
+    transform: translateY(0);
+  }
+  .cv-overlay-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg3);
+    flex-shrink: 0;
+  }
+  .cv-overlay-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+  .cv-overlay-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .cv-overlay-download {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cv-overlay-download:hover {
+    color: var(--brown-lt);
+    border-color: var(--brown-dim);
+  }
+  .cv-overlay-close {
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    padding: 0;
+  }
+  .cv-overlay-close:hover {
+    color: var(--brown-lt);
+    border-color: var(--brown-dim);
+    background: rgba(74,158,181,0.08);
+  }
+  .cv-overlay-frame-wrap {
+    flex: 1;
+    background: #1a1a1a;
+    overflow: hidden;
+  }
+  .cv-overlay-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  body.cv-overlay-locked {
+    overflow: hidden;
+  }
+
   /* ─── HAMBURGER MENU ─── */
   .nav-hamburger {
     display: none;
@@ -988,6 +1117,13 @@
     .lang-switch-option {
       padding: 4px 11px;
       font-size: 0.6rem;
+    }
+    .cv-overlay {
+      padding: 0;
+    }
+    .cv-overlay-card {
+      border-radius: 0;
+      border: none;
     }
     .nav-hamburger {
       display: flex;
@@ -1109,6 +1245,7 @@
       <li><a href="#projects" data-i18n="nav.projects">AI Projects</a></li>
       <li><a href="#other-experiences" data-i18n="nav.other">Other Experiences</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      <li><a href="#" class="nav-cv-btn" id="nav-cv-btn" data-i18n="nav.cv" aria-label="Open CV">CV</a></li>
     </ul>
     <button class="lang-switch" id="lang-switch" data-lang="en" aria-label="Language switch">
       <div class="lang-switch-track">
@@ -1123,13 +1260,29 @@
   </div>
 </nav>
 
+<!-- CV OVERLAY -->
+<div class="cv-overlay" id="cv-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="cv-overlay-title">
+  <div class="cv-overlay-card">
+    <div class="cv-overlay-toolbar">
+      <span class="cv-overlay-title" id="cv-overlay-title" data-i18n="cv.title">Curriculum Vitae</span>
+      <div class="cv-overlay-actions">
+        <a class="cv-overlay-download" id="cv-overlay-download" href="#" download data-i18n="cv.download">Download</a>
+        <button class="cv-overlay-close" id="cv-overlay-close" aria-label="Close CV">×</button>
+      </div>
+    </div>
+    <div class="cv-overlay-frame-wrap">
+      <iframe class="cv-overlay-frame" id="cv-overlay-frame" title="CV" src="about:blank"></iframe>
+    </div>
+  </div>
+</div>
+
 <!-- HERO -->
 <section id="hero">
   <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
   <div class="hero-left">
     <h1 class="hero-name">Adam Piron</h1>
     <p class="hero-tagline" data-i18n="hero.tagline">
-      Finance professional with 3 years of experience, drawn to ambitious projects. Open to opportunities in startups and growth-stage companies in Paris.
+      Finance professional with 3 years of experience, open to opportunities in startups and growth-stage companies in Paris.
     </p>
     <div class="hero-avail-top" style="margin-bottom:40px;margin-top:20px;">
       <span class="dot-green"></span> <span data-i18n="hero.available">Available from May 2026</span>
@@ -1559,9 +1712,11 @@
         "nav.projects":    "Projets IA",
         "nav.other":       "Autres Expériences",
         "nav.contact":     "Contact",
+        "cv.title":        "Curriculum Vitæ",
+        "cv.download":     "Télécharger",
 
         // HERO
-        "hero.tagline":    "Analyste avec 3 ans d'expérience en finance, attiré par les projets ambitieux.\nOuvert aux opportunités dans des startups et entreprises en forte croissance à Paris.",
+        "hero.tagline":    "Analyste avec 3 ans d'expérience en finance, ouvert aux opportunités dans des startups et entreprises en croissance à Paris.",
         "hero.available":  "Disponible à partir de mai 2026",
         "hero.cta":        "ME CONTACTER",
         "hero.experience": "Expérience",
@@ -1624,7 +1779,7 @@
         "bring.title":     "Ce que j'<em>apporte</em>",
         "bring.c1.label":  "Exécution & LIVRABLES",
         "bring.c1.title":  "7 transactions exécutées, 3 ans d'expérience",
-        "bring.c1.text":   "Orienté résultats, délivre des livrables de haute qualité tout en gérant plusieurs priorités de front. Présentation claire et concise des résultats.",
+        "bring.c1.text":   "Orienté résultats, délivre des livrables de haute qualité tout en gérant plusieurs priorités. Présentation claire et concise des résultats.",
         "bring.c1.ach":    "Contribution à 7 transactions M&A en 3 ans d'expérience en banque d'investissement.",
         "bring.c2.label":  "Gestion de projet",
         "bring.c2.title":  "Proactif et responsable",
@@ -1787,6 +1942,105 @@
         }
       } catch (_) {}
       applyLang(initial);
+    })();
+  </script>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CV OVERLAY BEHAVIOR
+       Opens the CV PDF in an overlay (desktop) or a new tab (mobile),
+       with the source PDF determined by current language.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      // ─── PDF FILE PATHS ─────────────────────────────────────────────
+      // EDIT THESE if the filenames in your GitHub assets/ folder differ.
+      const CV_PATHS = {
+        en: 'assets/CV-Adam-Piron-EN.pdf',
+        fr: 'assets/CV-Adam-Piron-FR.pdf'
+      };
+
+      const btn       = document.getElementById('nav-cv-btn');
+      const overlay   = document.getElementById('cv-overlay');
+      const closeBtn  = document.getElementById('cv-overlay-close');
+      const frame     = document.getElementById('cv-overlay-frame');
+      const dlLink    = document.getElementById('cv-overlay-download');
+      const switchEl  = document.getElementById('lang-switch');
+      if (!btn || !overlay || !frame) return;
+
+      // Mobile detection: most mobile browsers can't render PDFs in iframes,
+      // so we fall back to opening the PDF in a new tab.
+      function isMobile() {
+        return window.matchMedia('(max-width: 768px)').matches
+            || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      }
+
+      function currentLang() {
+        return (switchEl && switchEl.getAttribute('data-lang')) || 'en';
+      }
+
+      function currentPdf() {
+        const lang = currentLang();
+        return CV_PATHS[lang] || CV_PATHS.en;
+      }
+
+      function openOverlay() {
+        const url = currentPdf();
+        // Use #toolbar=1 to ensure native PDF chrome is shown where supported
+        frame.setAttribute('src', url + '#view=FitH');
+        dlLink.setAttribute('href', url);
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('cv-overlay-locked');
+      }
+
+      function closeOverlay() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('cv-overlay-locked');
+        // Free memory by clearing the iframe after the fade-out
+        setTimeout(() => {
+          if (!overlay.classList.contains('open')) {
+            frame.setAttribute('src', 'about:blank');
+          }
+        }, 350);
+      }
+
+      // ─── Open: mobile → new tab; desktop → overlay ──────────────────
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = currentPdf();
+        if (isMobile()) {
+          window.open(url, '_blank', 'noopener');
+          return;
+        }
+        openOverlay();
+      });
+
+      // ─── Close interactions ─────────────────────────────────────────
+      closeBtn.addEventListener('click', closeOverlay);
+
+      // Click on the dim backdrop (but not on the card itself) closes
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeOverlay();
+      });
+
+      // Esc closes
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) {
+          closeOverlay();
+        }
+      });
+
+      // ─── Language change while overlay is open: swap the PDF live ───
+      if (switchEl) {
+        const observer = new MutationObserver(() => {
+          if (!overlay.classList.contains('open')) return;
+          const url = currentPdf();
+          frame.setAttribute('src', url + '#view=FitH');
+          dlLink.setAttribute('href', url);
+        });
+        observer.observe(switchEl, { attributes: true, attributeFilter: ['data-lang'] });
+      }
     })();
   </script>
 
