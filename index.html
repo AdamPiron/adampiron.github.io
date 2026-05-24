@@ -706,6 +706,13 @@
     color: var(--text-dim);
     line-height: 1.7;
   }
+  .proj-card-stack {
+    font-size: 0.68rem;
+    color: var(--brown);
+    margin-top: 16px;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
 
   /* ─── LANGUAGES + INTERESTS + HOBBIES ─── */
   #extras {
@@ -1531,22 +1538,38 @@
       <div class="proj-card">
         <div class="proj-card-tag" data-i18n="proj.p1.tag">Web</div>
         <div class="proj-card-name" data-i18n="proj.p1.name">Personal Landing Page</div>
-        <div class="proj-card-desc" data-i18n="proj.p1.desc">This very webpage</div>
+        <div class="proj-card-desc" data-i18n="proj.p1.desc">This very webpage.</div>
+        <div class="proj-card-stack" data-i18n="proj.p1.stack">Claude (design &amp; iterations) · GitHub Pages · Claude Code (auto-deploy)</div>
       </div>
       <div class="proj-card">
-        <div class="proj-card-tag" data-i18n="proj.p2.tag">SaaS &amp; Mobile App</div>
+        <div class="proj-card-tag" data-i18n="proj.p2.tag">App</div>
         <div class="proj-card-name" data-i18n="proj.p2.name">Habit Tracking Dashboard</div>
-        <div class="proj-card-desc" data-i18n="proj.p2.desc">Full-stack SaaS and mobile application, including professional goals, health KPIs, running plan and personal finances</div>
+        <div class="proj-card-desc" data-i18n="proj.p2.desc">Full-stack app tracking personal and professional habits and goals, running locally on Mac and mobile.</div>
+        <div class="proj-card-stack" data-i18n="proj.p2.stack">Claude Code (vibe-coding) · Strava API</div>
       </div>
       <div class="proj-card">
         <div class="proj-card-tag" data-i18n="proj.p3.tag">AI Agent</div>
         <div class="proj-card-name" data-i18n="proj.p3.name">Market Study Agent</div>
-        <div class="proj-card-desc" data-i18n="proj.p3.desc">AI agent generating complete market studies to the standards of elite consulting firms — research, analysis and formatting into PowerPoint</div>
+        <div class="proj-card-desc" data-i18n="proj.p3.desc">Generates complete PowerPoint market studies via a multi-agent pipeline covering research, structuring, fact-checking, and formatting.</div>
+        <div class="proj-card-stack" data-i18n="proj.p3.stack">Claude Code</div>
       </div>
       <div class="proj-card">
         <div class="proj-card-tag" data-i18n="proj.p4.tag">Automation</div>
         <div class="proj-card-name" data-i18n="proj.p4.name">Professional Opportunities Monitoring Agent</div>
-        <div class="proj-card-desc" data-i18n="proj.p4.desc">Opportunity detection, application drafting, and automated LinkedIn outreach</div>
+        <div class="proj-card-desc" data-i18n="proj.p4.desc">Scrapes job boards daily, scores offers by relevance, and sends a synthesized digest by email. Improves with each iteration.</div>
+        <div class="proj-card-stack" data-i18n="proj.p4.stack">Claude CoWork (routine skill)</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-card-tag" data-i18n="proj.p5.tag">Automation</div>
+        <div class="proj-card-name" data-i18n="proj.p5.name">Podcast &amp; Video Summarizer</div>
+        <div class="proj-card-desc" data-i18n="proj.p5.desc">Synthesizes transcripts from YouTube videos and podcasts into structured summaries.</div>
+        <div class="proj-card-stack" data-i18n="proj.p5.stack">Claude Code</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-card-tag" data-i18n="proj.p6.tag">Finance</div>
+        <div class="proj-card-name" data-i18n="proj.p6.name">Financial Model Reviewer</div>
+        <div class="proj-card-desc" data-i18n="proj.p6.desc">Audits spreadsheet formulas, flags inconsistencies, and double-checks financial logic.</div>
+        <div class="proj-card-stack" data-i18n="proj.p6.stack">Claude for Excel</div>
       </div>
     </div>
   </div>
@@ -1806,17 +1829,29 @@
         // AI PROJECTS
         "proj.title":      "Projets <em>IA</em>",
         "proj.p1.tag":     "Web",
-        "proj.p1.name":    "Page personnelle",
-        "proj.p1.desc":    "Cette page web même",
-        "proj.p2.tag":     "SaaS & Application mobile",
-        "proj.p2.name":    "Dashboard de suivi d'habitudes",
-        "proj.p2.desc":    "Application SaaS et mobile full-stack couvrant objectifs professionnels, KPIs santé, plan de course à pied et finances personnelles",
+        "proj.p1.name":    "Landing page personnelle",
+        "proj.p1.desc":    "Cette page même.",
+        "proj.p1.stack":   "Claude (design & itérations) · GitHub Pages · Claude Code (déploiement automatique)",
+        "proj.p2.tag":     "Application",
+        "proj.p2.name":    "Dashboard personnel",
+        "proj.p2.desc":    "Application full-stack pour suivre mes habitudes et objectifs personnels et professionnels, tournant en local sur Mac et mobile.",
+        "proj.p2.stack":   "Claude Code (vibe-coding) · Strava API",
         "proj.p3.tag":     "Agent IA",
-        "proj.p3.name":    "Agent d'études de marché",
-        "proj.p3.desc":    "Agent IA générant des études de marché complètes aux standards des cabinets de conseil d'élite — recherche, analyse et mise en forme PowerPoint",
+        "proj.p3.name":    "Agent d'étude de marché",
+        "proj.p3.desc":    "Génère des études de marché complètes en PowerPoint via un pipeline multi-agents couvrant recherche, structuration, vérification et mise en forme.",
+        "proj.p3.stack":   "Claude Code",
         "proj.p4.tag":     "Automatisation",
         "proj.p4.name":    "Agent de veille d'opportunités professionnelles",
-        "proj.p4.desc":    "Détection d'opportunités, rédaction de candidatures et automatisation des prises de contact LinkedIn",
+        "proj.p4.desc":    "Scrape les job boards quotidiennement, évalue la pertinence des offres et envoie une synthèse par e-mail. S'affine à chaque itération.",
+        "proj.p4.stack":   "Claude CoWork (routine skill)",
+        "proj.p5.tag":     "Automatisation",
+        "proj.p5.name":    "Synthèse de podcasts et vidéos",
+        "proj.p5.desc":    "Synthétise les transcriptions de vidéos YouTube et de podcasts en résumés structurés.",
+        "proj.p5.stack":   "Claude Code",
+        "proj.p6.tag":     "Finance",
+        "proj.p6.name":    "Revue de modèle financier",
+        "proj.p6.desc":    "Audite les formules d'un tableur, relève les incohérences et vérifie la logique financière.",
+        "proj.p6.stack":   "Claude for Excel",
 
         // OTHER EXPERIENCES
         "other.title":     "Autres <em>Expériences</em>",
@@ -1943,6 +1978,10 @@
         }
       } catch (_) {}
       applyLang(initial);
+
+      // Expose so other scripts (e.g. carousel cloning) can re-apply after they
+      // inject new DOM nodes carrying data-i18n attributes.
+      window.__applyLang = applyLang;
     })();
   </script>
 
@@ -2093,6 +2132,14 @@
       // Duplicate the set so the loop is seamless
       const cards = Array.from(track.children);
       cards.forEach(c => track.appendChild(c.cloneNode(true)));
+
+      // Re-apply current language so clones get cached + translated correctly
+      // (otherwise their "original" cache would seed with whatever text was
+      // present at clone time, breaking the EN fallback).
+      if (typeof window.__applyLang === 'function') {
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        window.__applyLang(currentLang);
+      }
 
       // Total width of the ORIGINAL set (half of the doubled track)
       let loopWidth = track.scrollWidth / 2;
